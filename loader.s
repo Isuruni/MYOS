@@ -1,4 +1,4 @@
- global loader                   ; 
+ global loader                      ; 
 
     MAGIC_NUMBER equ 0x1BADB002     ; 
     				     ;	
@@ -19,12 +19,10 @@
         dd CHECKSUM                 ; 
 
     loader:                         ; 
-    	mov eax, 0xCAFEBABE         ;
-        mov esp, kernel_stack + KERNEL_STACK_SIZE; 
-                                                 ; 
-    ; The assembly code
-    extern sum_of_three   ; 
-
+    mov esp, kernel_stack + KERNEL_STACK_SIZE; 
+                                             ; 
+                                             ; 
+    extern sum_of_three     ; 
     push dword 3            ; 
     push dword 2            ; 
     push dword 1            ; 
