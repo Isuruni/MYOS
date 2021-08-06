@@ -1,5 +1,12 @@
-/* The C function */
-    int sum_of_three(int arg1, int arg2, int arg3)
-    {
-        return arg1 + arg2 + arg3;
-    }
+#include "framebuffer.h"
+#include "serial_port.h"
+
+void kmain(){
+
+    char msg[] = "MYOS";
+   
+    
+    serial_write(0x3F8, msg, 4);
+    fb_write(msg, 4);
+    
+}
