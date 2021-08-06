@@ -23,11 +23,10 @@
         mov esp, kernel_stack + KERNEL_STACK_SIZE; 
                                                  ; 
     						   ; 
-    extern sum_of_three     ; 
-
-    push dword 3            ; 
-    push dword 2            ; 
-    push dword 1            ; 
-    call sum_of_three       ; 
+    
+    extern kmain                            ; 
+    
+    call kmain                                  ; 
+    
     .loop:
 jmp .loop                   ; 
