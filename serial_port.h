@@ -21,7 +21,7 @@
 
 /* Divisor for different baud rates */
 enum BaudRate { Baud_115200 = 1, Baud_57600, Baud_19200, Baud_9600 };
-enum BaudRate divisor =Baud_115200;
+//enum BaudRate divisor =Baud_115200;
 
 /* The I/O port commands */
 
