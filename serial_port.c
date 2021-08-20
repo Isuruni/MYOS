@@ -1,3 +1,4 @@
+#include "io.h"
 #include "serial_port.h"
 
 void serial_configure_baud_rate(unsigned short com, unsigned short divisor) {
@@ -40,18 +41,17 @@ int serial_is_transmit_fifo_empty(unsigned short com) {
   return inb(SERIAL_LINE_STATUS_PORT(com)) & 0x20;
 }
 
-int serial_write(unsigned short com, char *buf, unsigned int len) {
- serial_configure(com, divisor);
-  unsigned int indexToBuffer = 0;
-  while (indexToBuffer < len) {
-    if (serial_is_transmit_fifo_empty(com)) {
-      serial_write_byte(com, buf[indexToBuffer]);
-      indexToBuffer++;
-    }
-  }
-  return 0;
-}
+void serial_write(char *buf, unsigned int len) {
+  serial_configure_baud_rate(SERIAL_COM1_BASE, 3);
+  serial_configure_line(SERIAL_COM1_BASE);
 
+  unsigned int i;
+  for (i=0; i<len; i++) {
+    while (!serial_is_transmit_fifo_empty(SERIAL_COM1_BASE));
+
+    outb(SERIAL_DATA_PORT(SERIAL_COM1_BASE), buf[i]);
+  }
+}
 void serial_write_byte(unsigned short port, char byteData) {
   outb(port, byteData);
 }
