@@ -12,7 +12,7 @@
     kernel_stack:                   ; 
         resb KERNEL_STACK_SIZE      ;  
 
-    section .text:                  ; 
+    section .text                  ; 
     align 4                         ; 
         dd MAGIC_NUMBER             ; 
         dd FLAGS                    ; 
