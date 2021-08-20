@@ -85,15 +85,14 @@ int serial_is_transmit_fifo_empty(unsigned short com);
  *  @param buf  Buffer that has contents to be written to screen
  *  @param len  Length of buffer
  */
-int serial_write(unsigned short com, char *buf, unsigned int len);
-
+void serial_write(char *buf, unsigned int len);
 /** serial_write_byte:
  *  Write byte data to given serial port
  *
  *  @param port Serial port to which data has to be written
  * @param byte_data 8 bit data
  */
-void serial_write_byte(unsigned short port, char byteData);
+ void serial_write_byte(unsigned short port, char byteData);
 
 /** serial_configure:
  *  Configure serial port
@@ -102,5 +101,6 @@ void serial_write_byte(unsigned short port, char byteData);
  * @param baudRate rate at which data needs to be transmitted
  */
 void serial_configure(unsigned short port, unsigned short baudRate);
+
 
 #endif /* INCLUDE_IO_H */
