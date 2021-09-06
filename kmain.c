@@ -5,6 +5,7 @@
 #include "keyboard.h"
 #include "interrupts.h"
 #include "multiboot.h"
+#include "paging.h"
 
 int kmain(multiboot_info_t *mbinfo)
 {
@@ -18,21 +19,15 @@ int kmain(multiboot_info_t *mbinfo)
 	call_module_t start_program = (call_module_t) address_of_module;
     	start_program();
     	}else
-    		return;
+    		return 0;
    
     //Intialize gdt
       segments_install_gdt();
     //Initialize idt
       interrupts_install_idt();
     
-    /*serial_write(0x3F8, msg, 4);unsigned char scancode,ascii;char asciicode[0];
-    fb_write(msg, 4);
-    scancode = keyboard_read_scan_code();
-    ascii = keyboard_scan_code_to_ascii(scancode);
-    asciicode[0] = ascii;
-    serial_write(asciicode, sizeof(asciicode));
-    fb_write(asciicode, sizeof(asciicode));*/
-   
+    //paging
+    init_paging();
    return 0; 
 }
 
