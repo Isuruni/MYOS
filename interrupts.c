@@ -10,6 +10,13 @@
 #define INTERRUPTS_KEYBOARD 33 
 #define INTERRUPTS_PAGING 14 
 
+isr_t interrupt_handlers[256];
+registers_t regs;
+
+void register_interrupt_handler(u8int n, isr_t handler) {
+  interrupt_handlers[n] = handler;
+}
+
 struct IDTDescriptor idt_descriptors[INTERRUPTS_DESCRIPTOR_COUNT];
 struct IDT idt;
 
@@ -47,7 +54,6 @@ void interrupt_handler(__attribute__((unused)) struct cpu_state cpu, unsigned in
 {
 	unsigned char scan_code;
 	unsigned char ascii;
-
 	switch (interrupt){
 		case INTERRUPTS_KEYBOARD:
 
@@ -64,11 +70,9 @@ void interrupt_handler(__attribute__((unused)) struct cpu_state cpu, unsigned in
 			}
 
 			pic_acknowledge(interrupt);
-
 			break;
-		
 		case INTERRUPTS_PAGING:
-			page_fault();	
+			page_fault(regs);	
 			break;
 		default:
 			break;
