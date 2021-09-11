@@ -1,6 +1,10 @@
 global loader                                              ; the entry symbol for ELF
 
 extern kmain                                               ; function kmain is defined elsewhere
+extern kernel_virtual_start				;
+extern kernel_virtual_end				;
+extern kernel_physical_start				;
+extern kernel_physical_end				;
 
 MAGIC_NUMBER    equ 0x1BADB002                             ; define the magic number constant
 ALIGN_MODULES   equ 0x00000001                             ; tell GRUB to align modules
@@ -28,6 +32,10 @@ loader:                                                    ; the loader label (d
                                                            ; stack (end of memory area)
     
     push ebx                                               ; multiboot info in ebx 
+    push kernel_physical_end					;
+    push kernel_physical_start				;
+    push kernel_virtual_end					;
+    push kernel_virtual_start					;
     
     call kmain                                             ; Calling the function kmain
    
