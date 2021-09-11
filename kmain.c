@@ -7,7 +7,7 @@
 #include "multiboot.h"
 #include "paging.h"
 
-int kmain(multiboot_info_t *mbinfo)
+int kmain(multiboot_info_t *mbinfo, u32int kernel_physical_start, u32int kernel_physical_end)
 {
      // Test appel module 
         module_t* modules = (module_t*) mbinfo->mods_addr;       
@@ -20,15 +20,22 @@ int kmain(multiboot_info_t *mbinfo)
     	start_program();
     	}else
     		return 0;
+    
+    //paging
    
+   init_paging(kernel_physical_start, kernel_physical_end);
+
     //Intialize gdt
       segments_install_gdt();
     //Initialize idt
       interrupts_install_idt();
     
-    //paging
-    init_paging();
+    
    return 0; 
 }
 
+
+
+   
+   
    
