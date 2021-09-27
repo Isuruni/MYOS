@@ -1,15 +1,16 @@
     ENTRY(loader)           /* the name of the entry symbol */
 
-    /* these labels get exported to the code files */
-    kernel_virtual_start = . ;
-    kernel_physical_start = . - 0xC0000000;
+  kernel_virtual_start = . ;
+  kernel_physical_start = . - 0xC0000000;  
+  
+OUTPUT_FORMAT("binary")    /* output flat binary */
 
-    
 SECTIONS {
-       . = 0xC0100000      ;    /* the code should be relocated to 3 GB + 1 MB */
+       . = 0;                 /* relocate to address 0 */
 
     .text ALIGN (0x1000) :   /* align at 4 KB */
     {
+    	 start.o(.text)     /* include the .text section of start.o */
         *(.text)             /* all text sections from all files */
     }
 
